@@ -1,5 +1,6 @@
 import {
     Box,
+    Button,
     Divider,
     Heading,
     HStack,
@@ -17,11 +18,13 @@ import {Bet, SportEvent} from "../types";
 import SportEventTable from "../components/SportEventTable";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const DashboardRoute: React.FC = () => {
     const [bets, setBets] = useState<Bet[]>([]);
     const [sportEvents, setSportEvents] = useState<SportEvent[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchBets = async () => {
@@ -47,6 +50,10 @@ const DashboardRoute: React.FC = () => {
         setLoading(false);
     }, []);
 
+    const handleLogout = () => {
+        navigate("/login")
+    };
+
     if (loading) {
         return <p>Loading...</p>;
     }
@@ -54,9 +61,14 @@ const DashboardRoute: React.FC = () => {
     return (
         <Box p={8} minH="100vh" bg={"brand.50"}>
             <VStack spacing={8}>
-                <Heading as="h1" size="2xl" mb={5} textAlign="center" color="primary.500">
-                    Stavnica
-                </Heading>
+                <HStack w="full" justifyContent="space-between">
+                    <Heading as="h1" size="2xl" mb={5} textAlign="center" color="brand.800">
+                        Welcome {localStorage.getItem("userName")}
+                    </Heading>
+                    <Button onClick={handleLogout} colorScheme="red" variant="outline">
+                        Logout
+                    </Button>
+                </HStack>
                 <HStack spacing={8} w="full" justifyContent="space-around">
                     <Box
                         w={{ base: "100%", md: "45%" }}

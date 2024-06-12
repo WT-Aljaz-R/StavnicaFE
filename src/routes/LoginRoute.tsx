@@ -31,6 +31,7 @@ const LoginRoute: React.FC = () => {
 
             const userId = response.data.id; // Assuming the response contains the user ID
             localStorage.setItem("userId", userId.toString());
+            localStorage.setItem("userName", username);
             navigate('/dashboard');
         } catch (error) {
             console.error('Login failed:', error);
